@@ -27,10 +27,8 @@ RUN apt-get install -y  \
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pgsql pdo_pgsql zip pdo_mysql mbstring exif pcntl bcmath gd
 
-RUN pecl install xdebug-2.9.7 \
-    && pecl install redis \
-    && pecl install mongodb \
-    && docker-php-ext-enable xdebug redis mongodb
+RUN pecl install xdebug-2.9.7 mailparse redis mongodb\
+    && docker-php-ext-enable xdebug mailparse redis mongodb
 
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
