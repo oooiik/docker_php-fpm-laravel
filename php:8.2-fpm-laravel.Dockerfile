@@ -20,11 +20,12 @@ RUN apt-get install -y  \
     curl \
     wget \
     openssl  \
-    libssl-dev
+    libssl-dev \
+    libpq-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-install zip pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pgsql pdo_pgsql zip pdo_mysql mbstring exif pcntl bcmath gd calendar
 
 RUN pecl install xdebug \
     && pecl install redis \
