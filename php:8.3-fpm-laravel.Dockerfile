@@ -1,4 +1,5 @@
 FROM php:8.3-fpm
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 ARG USER=user
 ARG UID=1000
@@ -22,6 +23,7 @@ RUN apt-get install -y  \
     openssl  \
     libssl-dev \
     libpq-dev \
+    libffi-dev \
     git \
     cmake \
     autoconf \
@@ -29,14 +31,6 @@ RUN apt-get install -y  \
     pkg-config \
     build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pgsql pdo_pgsql zip pdo_mysql mbstring exif pcntl bcmath gd calendar
-
-RUN pecl install xdebug redis mongodb mailparse \
-    && docker-php-ext-enable xdebug redis mongodb mailparse
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install protobuf compiler (protoc)
 RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v27.2/protoc-27.2-linux-x86_64.zip \
@@ -57,6 +51,35 @@ RUN git clone --recurse-submodules -b v1.38.0 https://github.com/grpc/grpc /grpc
 # Install PHP extensions for gRPC
 RUN pecl install grpc \
     && docker-php-ext-enable grpc
+
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-configure ffi --with-ffi
+
+RUN docker-php-ext-install \
+    pgsql \
+    pdo_pgsql \
+    zip \
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    calendar \
+    ffi
+
+RUN pecl install \
+    xdebug \
+    redis \
+    mongodb \
+    mailparse
+
+RUN docker-php-ext-enable \
+    xdebug \
+    redis \
+    mongodb \
+    mailparse \
+    ffi
 
 RUN useradd -G www-data,root -u $UID -d /home/$USER $USER
 RUN mkdir -p /home/$USER/.composer && \
