@@ -1,10 +1,12 @@
 # PHP-FPM Laravel Dev Images (with gRPC)
 
+[![Build](https://github.com/oooiik/docker_php-fpm-laravel/actions/workflows/build.yml/badge.svg)](https://github.com/oooiik/docker_php-fpm-laravel/actions/workflows/build.yml)
+[![Docker Pulls](https://img.shields.io/docker/pulls/oooiik/php?style=flat-square&logo=docker&logoColor=white&color=2496ED)](https://hub.docker.com/r/oooiik/php)
+[![Docker Image Size](https://img.shields.io/docker/image-size/oooiik/php/8.3-fpm-laravel?style=flat-square&logo=docker&logoColor=white&label=8.3%20size)](https://hub.docker.com/r/oooiik/php)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![PHP](https://img.shields.io/badge/php-7.4%20%7C%208.2%20%7C%208.3%20%7C%208.4-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
 [![Laravel](https://img.shields.io/badge/laravel-ready-FF2D20?style=flat-square&logo=laravel&logoColor=white)](https://laravel.com/)
 [![gRPC](https://img.shields.io/badge/gRPC-built--in-244C5A?style=flat-square&logo=grpc&logoColor=white)](https://grpc.io/)
-[![Build](https://github.com/oooiik/docker_php-fpm-laravel/actions/workflows/build.yml/badge.svg)](https://github.com/oooiik/docker_php-fpm-laravel/actions/workflows/build.yml)
 
 Pre-built PHP-FPM Docker images tuned for local Laravel development — with **gRPC support compiled in from source**, so you can stop fighting `pecl install grpc` and `protoc-gen-php-grpc` setup on every new project.
 
